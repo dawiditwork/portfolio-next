@@ -140,7 +140,7 @@ This project is currently published without an open-source license. All rights a
 
 ## Portfolio languages and CV files
 
-English is the default. The EN/DE switch translates the interface and remembers the selection in localStorage when available. Translations are in `components/translations.js`.
+German is the default. The language buttons display British and German flags. The EN/DE switch translates the interface and remembers the selection in localStorage when available. Translations are in `components/translations.js`.
 
 - English CV (existing): `public/Dawid-Frankowicz-CV.pdf`
 - German CV: add your German PDF as **`public/Dawid-Frankowicz-CV-DE.pdf`**. The DE download button already points to this file; it will work once the file is added.

@@ -62,7 +62,7 @@ const projects = [
 ];
 
 export default function Portfolio() {
-  const [language, setLanguage] = useState("en");
+  const [language, setLanguage] = useState("de");
   const t = (text) => language === "de" ? (german[text] ?? text) : text;
   const translatedLead = t(heroLead);
   const translatedEmphasis = t(heroEmphasis);
@@ -73,8 +73,8 @@ export default function Portfolio() {
   useEffect(() => {
     try {
       const saved = localStorage.getItem("portfolio-language");
-      if (saved === "de") {
-        const timer = window.setTimeout(() => setLanguage("de"), 0);
+      if (saved === "en" || saved === "de") {
+        const timer = window.setTimeout(() => setLanguage(saved), 0);
         return () => window.clearTimeout(timer);
       }
     } catch { /* The switch still works when storage is unavailable. */ }
@@ -252,7 +252,22 @@ export default function Portfolio() {
         </nav>
         <div className="language-switch" role="group" aria-label={language === "de" ? "Sprache" : "Language"}>
           {["en", "de"].map((value) => (
-            <button key={value} type="button" lang={value} aria-label={value === "en" ? "English" : "Deutsch"} aria-pressed={language === value} onClick={() => changeLanguage(value)}>{value.toUpperCase()}</button>
+            <button key={value} type="button" lang={value} aria-label={value === "en" ? "English" : "Deutsch"} aria-pressed={language === value} onClick={() => changeLanguage(value)}>
+              <svg width="20" height="14" viewBox="0 0 60 42" aria-hidden="true" focusable="false" style={{ verticalAlign: "middle", marginRight: 6 }}>
+                {value === "de" ? <>
+                  <path fill="#111" d="M0 0h60v14H0z" />
+                  <path fill="#d00" d="M0 14h60v14H0z" />
+                  <path fill="#ffce00" d="M0 28h60v14H0z" />
+                </> : <>
+                  <path fill="#012169" d="M0 0h60v42H0z" />
+                  <path stroke="#fff" strokeWidth="9" d="m0 0 60 42M60 0 0 42" />
+                  <path stroke="#c8102e" strokeWidth="3" d="m0 0 60 42M60 0 0 42" />
+                  <path stroke="#fff" strokeWidth="14" d="M30 0v42M0 21h60" />
+                  <path stroke="#c8102e" strokeWidth="8" d="M30 0v42M0 21h60" />
+                </>}
+              </svg>
+              {value.toUpperCase()}
+            </button>
           ))}
         </div>
         <a className="header-cta" href="#contact">{t("Let's talk")}</a>
