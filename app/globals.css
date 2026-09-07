@@ -262,3 +262,16 @@ footer .brand { color: var(--white); }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .reveal-item { opacity: 1 !important; clip-path: none !important; }
 }
+
+/* Language controls match the existing outlined buttons. */
+.language-switch { display: flex; flex-shrink: 0; border: 1px solid var(--ink); }
+.language-switch button { min-height: 42px; padding: 8px 11px; border: 0; background: transparent; color: var(--ink); cursor: pointer; font-size: .75rem; }
+.language-switch button[aria-pressed="true"] { background: var(--ink); color: var(--white); }
+.language-switch button:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+.site-header { gap: 14px; }
+.hero-actions { flex-wrap: wrap; }
+.hero-actions .button { width: auto; min-width: 220px; }
+.resume-document-section { overflow-y: auto; }
+@media (max-width: 1100px) { .header-cta { display: none; } }
+@media (max-width: 900px) { .language-switch { margin-left: auto; } .menu-button { order: 2; } }
+@media (max-width: 620px) { .hero-actions .button { width: 100%; min-width: 0; } .site-header { padding-inline: 16px; gap: 10px; } .site-header .brand { font-size: .85rem; letter-spacing: .1em; } }

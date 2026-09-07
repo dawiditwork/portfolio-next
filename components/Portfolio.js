@@ -1,11 +1,11 @@
 "use client";
 
+import { german } from "./translations";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const heroLead = "I build digital products that feel ";
 const heroEmphasis = "clear and human.";
-const heroTitle = heroLead + heroEmphasis;
 const heroIntro = "I'm Dawid, a full-stack developer with a Computer Science background, building modern web and mobile applications — from user interface to backend.";
 const resumeTabs = ["experience", "education", "skills"];
 
@@ -62,6 +62,33 @@ const projects = [
 ];
 
 export default function Portfolio() {
+  const [language, setLanguage] = useState("en");
+  const t = (text) => language === "de" ? (german[text] ?? text) : text;
+  const translatedLead = t(heroLead);
+  const translatedEmphasis = t(heroEmphasis);
+  const translatedTitle = translatedLead + translatedEmphasis;
+  const translatedIntro = t(heroIntro);
+  const cvFile = language === "de" ? "Dawid-Frankowicz-CV-DE.pdf" : "Dawid-Frankowicz-CV.pdf";
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("portfolio-language");
+      if (saved === "de") {
+        const timer = window.setTimeout(() => setLanguage("de"), 0);
+        return () => window.clearTimeout(timer);
+      }
+    } catch { /* The switch still works when storage is unavailable. */ }
+  }, []);
+
+  useEffect(() => { document.documentElement.lang = language; }, [language]);
+
+  function changeLanguage(next) {
+    setLanguage(next);
+    setHeroCharacters(0);
+    setIntroCharacters(0);
+    try { localStorage.setItem("portfolio-language", next); } catch { /* Optional persistence. */ }
+  }
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [resumeTab, setResumeTab] = useState("experience");
   const [formState, setFormState] = useState("idle");
@@ -72,8 +99,8 @@ export default function Portfolio() {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       const reducedMotionTimer = window.setTimeout(() => {
-        setHeroCharacters(heroTitle.length);
-        setIntroCharacters(heroIntro.length);
+        setHeroCharacters(translatedTitle.length);
+        setIntroCharacters(translatedIntro.length);
       }, 0);
       return () => window.clearTimeout(reducedMotionTimer);
     }
@@ -90,10 +117,10 @@ export default function Portfolio() {
     const typeIntro = (index) => {
       if (cancelled) return;
       setIntroCharacters(index);
-      if (index < heroIntro.length) {
+      if (index < translatedIntro.length) {
         timer = window.setTimeout(
           () => typeIntro(index + 1),
-          nextDelay(heroIntro[index], 18),
+          nextDelay(translatedIntro[index], 18),
         );
       }
     };
@@ -101,10 +128,10 @@ export default function Portfolio() {
     const typeTitle = (index) => {
       if (cancelled) return;
       setHeroCharacters(index);
-      if (index < heroTitle.length) {
+      if (index < translatedTitle.length) {
         timer = window.setTimeout(
           () => typeTitle(index + 1),
-          nextDelay(heroTitle[index], 44),
+          nextDelay(translatedTitle[index], 44),
         );
       } else {
         timer = window.setTimeout(() => typeIntro(1), 320);
@@ -117,7 +144,7 @@ export default function Portfolio() {
       cancelled = true;
       window.clearTimeout(timer);
     };
-  }, []);
+  }, [translatedTitle, translatedIntro]);
 
   useEffect(() => {
     const sections = document.querySelectorAll(".section");
@@ -207,99 +234,104 @@ export default function Portfolio() {
   return (
     <>
       <header className="site-header">
-        <a className="brand" href="#home" aria-label="Go to home">FRANKOWICZ<span>.</span></a>
+        <a className="brand" href="#home" aria-label={t("Go to home")}>FRANKOWICZ<span>.</span></a>
         <button
           className="menu-button"
           type="button"
           aria-expanded={menuOpen}
-          aria-label="Toggle navigation"
+          aria-label={t("Toggle navigation")}
           onClick={() => setMenuOpen((open) => !open)}
         >
           <span />
           <span />
         </button>
-        <nav className={menuOpen ? "nav open" : "nav"} aria-label="Main navigation">
+        <nav className={menuOpen ? "nav open" : "nav"} aria-label={t("Main navigation")}>
           {navItems.map(([id, label]) => (
-            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{label}</a>
+            <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)}>{t(label)}</a>
           ))}
         </nav>
-        <a className="header-cta" href="#contact">Let&apos;s talk</a>
+        <div className="language-switch" role="group" aria-label={language === "de" ? "Sprache" : "Language"}>
+          {["en", "de"].map((value) => (
+            <button key={value} type="button" lang={value} aria-label={value === "en" ? "English" : "Deutsch"} aria-pressed={language === value} onClick={() => changeLanguage(value)}>{value.toUpperCase()}</button>
+          ))}
+        </div>
+        <a className="header-cta" href="#contact">{t("Let's talk")}</a>
       </header>
 
       <main>
         <section className="hero" id="home">
           <div className="hero-copy">
-            <p className="eyebrow"><span /> Available for meaningful work</p>
+            <p className="eyebrow"><span /> {t("Available for meaningful work")}</p>
             <h1 className="typewriter-title">
-              <span className="sr-only">{heroTitle}</span>
-              <span className="typewriter-reserve" aria-hidden="true">{heroLead}<em>{heroEmphasis}</em></span>
+              <span className="sr-only">{translatedTitle}</span>
+              <span className="typewriter-reserve" aria-hidden="true">{translatedLead}<em>{translatedEmphasis}</em></span>
               <span className="typewriter-live" aria-hidden="true">
-                {heroTitle.slice(0, Math.min(heroCharacters, heroLead.length))}
-                <em>{heroTitle.slice(heroLead.length, heroCharacters)}</em>
-                {heroCharacters < heroTitle.length && <span className="typewriter-caret" />}
+                {translatedTitle.slice(0, Math.min(heroCharacters, translatedLead.length))}
+                <em>{translatedTitle.slice(translatedLead.length, heroCharacters)}</em>
+                {heroCharacters < translatedTitle.length && <span className="typewriter-caret" />}
               </span>
             </h1>
             <p className="hero-intro typewriter-intro">
-              <span className="sr-only">{heroIntro}</span>
-              <span className="typewriter-reserve" aria-hidden="true">{heroIntro}</span>
+              <span className="sr-only">{translatedIntro}</span>
+              <span className="typewriter-reserve" aria-hidden="true">{translatedIntro}</span>
               <span className="typewriter-live" aria-hidden="true">
-                {heroIntro.slice(0, introCharacters)}
-                {heroCharacters === heroTitle.length && <span className="typewriter-caret small" />}
+                {translatedIntro.slice(0, introCharacters)}
+                {heroCharacters === translatedTitle.length && <span className="typewriter-caret small" />}
               </span>
             </p>
             <div className="hero-actions">
-              <a className="button primary" href="#projects">Explore my work <span aria-hidden="true">↗</span></a>
-              <a className="button secondary" href="/Dawid-Frankowicz-CV.pdf" download="Dawid-Frankowicz-CV.pdf">Download CV <span aria-hidden="true">↓</span></a>
+              <a className="button primary" href="#projects">{t("Explore my work")} <span aria-hidden="true">↗</span></a>
+              <a className="button secondary" href={`/${cvFile}`} download={cvFile}>{t("Download CV")} <span aria-hidden="true">↓</span></a>
             </div>
             <div className="hero-stats">
-              <div><strong>Engineer</strong><span>Computer Science</span></div>
-              <div><strong>Web & Mobile</strong><span>Applications</span></div>
-              <div><strong>Full Stack</strong><span>Development</span></div>
+              <div><strong>{t("Engineer")}</strong><span>{t("Computer Science")}</span></div>
+              <div><strong>{t("Web & Mobile")}</strong><span>{t("Applications")}</span></div>
+              <div><strong>{t("Full Stack")}</strong><span>{t("Development")}</span></div>
             </div>
           </div>
           <div className="hero-visual">
             <div className="portrait-frame">
               <Image src="/images/dawid-profile.png" alt="Dawid Frankowicz" fill priority sizes="(max-width: 900px) 80vw, 38vw" />
             </div>
-            <p className="vertical-note">DESIGN · CODE · DELIVER</p>
+            <p className="vertical-note">{t("DESIGN · CODE · DELIVER")}</p>
           </div>
         </section>
 
         <section className="section about" id="about">
-          <div className="section-label">01 / About</div>
+          <div className="section-label">{t("01 / About")}</div>
           <div className="about-grid">
             <div className="about-copy">
-              <p className="kicker">About me</p>
-              <h2>Engineering background.<br />Practical mindset.</h2>
+              <p className="kicker">{t("About me")}</p>
+              <h2>{t("Engineering background.")}<br />{t("Practical mindset.")}</h2>
               <div className="about-intro">
-                <p>I&apos;m Dawid Frankowicz, a full-stack developer with an engineering degree in Computer Science. I build modern web and mobile applications using React, Next.js, React Native and Node.js.</p>
-                <p>I enjoy turning ideas into clear, reliable products — from responsive interfaces to APIs and databases. I value practical solutions, maintainable code and continuous development.</p>
+                <p>{t("I'm Dawid Frankowicz, a full-stack developer with an engineering degree in Computer Science. I build modern web and mobile applications using React, Next.js, React Native and Node.js.")}</p>
+                <p>{t("I enjoy turning ideas into clear, reliable products — from responsive interfaces to APIs and databases. I value practical solutions, maintainable code and continuous development.")}</p>
               </div>
               <div className="values">
-                <div><span>01</span><strong>Full-stack development</strong><p>Frontend, backend and databases working as one product.</p></div>
-                <div><span>02</span><strong>Web & mobile</strong><p>Responsive websites and cross-platform applications.</p></div>
-                <div><span>03</span><strong>Reliable approach</strong><p>Clear communication and maintainable solutions.</p></div>
+                <div><span>01</span><strong>{t("Full-stack development")}</strong><p>{t("Frontend, backend and databases working as one product.")}</p></div>
+                <div><span>02</span><strong>{t("Web & mobile")}</strong><p>{t("Responsive websites and cross-platform applications.")}</p></div>
+                <div><span>03</span><strong>{t("Reliable approach")}</strong><p>{t("Clear communication and maintainable solutions.")}</p></div>
               </div>
             </div>
           </div>
         </section>
 
         <section className="section resume" id="resume">
-          <div className="section-label light">02 / Resume</div>
+          <div className="section-label light">{t("02 / Resume")}</div>
           <div className="section-heading light-heading">
-            <p className="kicker">Experience & expertise</p>
-            <h2>A practical builder,<br />always learning.</h2>
+            <p className="kicker">{t("Experience & expertise")}</p>
+            <h2>{t("A practical builder,")}<br />{t("always learning.")}</h2>
           </div>
           <div className="resume-layout">
-            <div className="resume-tabs" role="tablist" aria-label="Resume sections">
+            <div className="resume-tabs" role="tablist" aria-label={t("Resume sections")}>
               {resumeTabs.map((tab) => (
                 <button
-                  key={tab}
+                  key={t(tab)}
                   role="tab"
                   aria-selected={resumeTab === tab}
                   onClick={() => setResumeTab(tab)}
                 >
-                  {tab}
+                  {t(tab)}
                 </button>
               ))}
             </div>
@@ -310,38 +342,35 @@ export default function Portfolio() {
               >
                 <div className="resume-document-section" aria-hidden={resumeTab !== "experience"}>
                   <article className="timeline-entry">
-                    <div className="timeline-date">03.2025 — PRESENT</div>
+                    <div className="timeline-date">{t("03.2025 — PRESENT")}</div>
                     <div>
-                      <h3>Professional Driver</h3>
-                      <p className="company">Murpf AG · 4614 Hägendorf, Switzerland</p>
-                      <p>Safe and reliable transport with responsibility for timely service.</p>
+                      <h3>{t("Professional Driver")}</h3>
+                      <p className="company">{t("Murpf AG · 4614 Hägendorf, Switzerland")}</p>
+                      <p>{t("Safe and reliable transport with responsibility for timely service.")}</p>
                     </div>
                   </article>
                   <article className="timeline-entry">
                     <div className="timeline-date">09.2021 — 12.2024</div>
                     <div>
-                      <h3>Professional Driver</h3>
-                      <p className="company">Eckert Baulogistik · 8212 Neuhausen, Switzerland</p>
-                      <p>Safe and reliable transport with responsibility for timely service.</p>
+                      <h3>{t("Professional Driver")}</h3>
+                      <p className="company">{t("Eckert Baulogistik · 8212 Neuhausen, Switzerland")}</p>
+                      <p>{t("Safe and reliable transport with responsibility for timely service.")}</p>
                     </div>
                   </article>
                   <article className="timeline-entry">
                     <div className="timeline-date">2020 — 07.2021</div>
                     <div>
-                      <h3>On-site Coordinator</h3>
-                      <p className="company">OTTO Work Force · Eindhoven, Netherlands</p>
-                      <p>On-site support and coordination.</p>
+                      <h3>{t("On-site Coordinator")}</h3>
+                      <p className="company">{t("OTTO Work Force · Eindhoven, Netherlands")}</p>
+                      <p>{t("On-site support and coordination.")}</p>
                     </div>
                   </article>
                   <article className="timeline-entry">
                     <div className="timeline-date">04.2019 — 12.2019</div>
                     <div>
-                      <h3>WordPress Developer</h3>
-                      <p className="company">InterStudio · Kielce, Poland</p>
-                      <p>
-                        Built, customized and maintained responsive WordPress websites,
-                        including content updates, theme adjustments and ongoing technical support.
-                      </p>
+                      <h3>{t("WordPress Developer")}</h3>
+                      <p className="company">{t("InterStudio · Kielce, Poland")}</p>
+                      <p>{t("Built, customized and maintained responsive WordPress websites, including content updates, theme adjustments and ongoing technical support.")} </p>
                     </div>
                   </article>
                 </div>
@@ -350,40 +379,40 @@ export default function Portfolio() {
                     <div className="timeline-date">10.2015 — 10.2019</div>
                     <div className="timeline-content-with-media">
                       <div>
-                        <h3>Engineering Degree</h3>
-                        <p className="company">Jan Kochanowski University in Kielce, Poland</p>
-                        <p>Field: Computer Science<br />Specialization: IT Technologies</p>
+                        <h3>{t("Engineering Degree")}</h3>
+                        <p className="company">{t("Jan Kochanowski University in Kielce, Poland")}</p>
+                        <p>{t("Field: Computer Science")}<br />{t("Specialization: IT Technologies")}</p>
                       </div>
                       <a
                         className="diploma-inline"
                         href="/images/diploma-redacted.png"
                         target="_blank"
                         rel="noreferrer"
-                        aria-label="Redacted university diploma – open full size"
+                        aria-label={t("Redacted university diploma – open full size")}
                       >
                         <Image
                           src="/images/diploma-redacted.png"
                           width={140}
                           height={200}
-                          alt="Redacted university diploma"
+                          alt={t("Redacted university diploma")}
                         />
-                        <span>View diploma ↗</span>
+                        <span>{t("View diploma ↗")}</span>
                       </a>
                     </div>
                   </article>
                   <article className="timeline-entry">
                     <div className="timeline-date">09.2011 — 04.2015</div>
                     <div>
-                      <h3>High School Diploma</h3>
-                      <p className="company">Vocational School of Computer Science, Poland</p>
-                      <p>Profile: Computer Science<br />Specialization: Computer Graphics</p>
+                      <h3>{t("High School Diploma")}</h3>
+                      <p className="company">{t("Vocational School of Computer Science, Poland")}</p>
+                      <p>{t("Profile: Computer Science")}<br />{t("Specialization: Computer Graphics")}</p>
                     </div>
                   </article>
                   <article className="timeline-entry">
                     <div className="timeline-date">2002 — 2011</div>
                     <div>
-                      <h3>Compulsory Education</h3>
-                      <p className="company">Poland</p>
+                      <h3>{t("Compulsory Education")}</h3>
+                      <p className="company">{t("Poland")}</p>
                     </div>
                   </article>
                 </div>
@@ -396,23 +425,23 @@ export default function Portfolio() {
         </section>
 
         <section className="section projects" id="projects">
-          <div className="section-label">03 / Selected work</div>
-          <div className="section-heading split-heading"><div><p className="kicker">Projects</p><h2>Ideas turned into useful products.</h2></div><p>A selection of web and mobile work covering product design, frontend systems and backend architecture.</p></div>
+          <div className="section-label">{t("03 / Selected work")}</div>
+          <div className="section-heading split-heading"><div><p className="kicker">{t("Projects")}</p><h2>{t("Ideas turned into useful products.")}</h2></div><p>{t("A selection of web and mobile work covering product design, frontend systems and backend architecture.")}</p></div>
           <div className="project-list">
             {projects.map((project) => (
               <a className="project" href={project.href} target="_blank" rel="noreferrer" key={project.number}>
                 <span className="project-number">{project.number}</span>
                 <div className="project-copy">
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <span className="project-stack">{project.stack}</span>
+                  <h3>{t(project.title)}</h3>
+                  <p>{t(project.description)}</p>
+                  <span className="project-stack">{t(project.stack)}</span>
                 </div>
                 <Image
                   className="project-shot"
                   src={project.image}
                   width={640}
                   height={360}
-                  alt={`${project.title} homepage`}
+                  alt={`${t(project.title)} ${t("homepage")}`}
                 />
                 <span className="project-arrow" aria-hidden="true">↗</span>
               </a>
@@ -421,15 +450,15 @@ export default function Portfolio() {
         </section>
 
         <section className="section contact" id="contact">
-          <div className="section-label light">04 / Contact</div>
+          <div className="section-label light">{t("04 / Contact")}</div>
           <div className="contact-grid">
-            <div className="contact-copy"><p className="kicker">Have a project in mind?</p><h2>Let&apos;s make something useful.</h2><p>Tell me what you&apos;re working on, where you&apos;re stuck, or what you want to improve. I&apos;ll get back to you as soon as possible.</p></div>
+            <div className="contact-copy"><p className="kicker">{t("Have a project in mind?")}</p><h2>{t("Let's make something useful.")}</h2><p>{t("Tell me what you're working on, where you're stuck, or what you want to improve. I'll get back to you as soon as possible.")}</p></div>
             <form className="contact-form" onSubmit={submitContact}>
-              <label>Name<input name="name" autoComplete="name" required maxLength={80} placeholder="Your name" /></label>
-              <label>Email<input name="email" type="email" autoComplete="email" required maxLength={160} placeholder="you@example.com" /></label>
-              <label>Message<textarea name="message" required minLength={10} maxLength={4000} rows={5} placeholder="A few words about your project..." /></label>
-              <button className="button primary" type="submit" disabled={formState === "loading"}>{formState === "loading" ? "Sending..." : "Send message"} <span>↗</span></button>
-              <p className={`form-feedback ${formState}`} aria-live="polite">{feedback}</p>
+              <label>{t("Name")}<input name="name" autoComplete="name" required maxLength={80} placeholder={t("Your name")} /></label>
+              <label>{t("Email")}<input name="email" type="email" autoComplete="email" required maxLength={160} placeholder="you@example.com" /></label>
+              <label>{t("Message")}<textarea name="message" required minLength={10} maxLength={4000} rows={5} placeholder={t("A few words about your project...")} /></label>
+              <button className="button primary" type="submit" disabled={formState === "loading"}>{formState === "loading" ? t("Sending...") : t("Send message")} <span>↗</span></button>
+              <p className={`form-feedback ${formState}`} aria-live="polite">{t(feedback)}</p>
             </form>
           </div>
         </section>
@@ -437,11 +466,11 @@ export default function Portfolio() {
 
       <footer>
         <a className="brand" href="#home">FRANKOWICZ<span>.</span></a>
-        <p>Full-stack developer · Web & mobile</p>
+        <p>{t("Full-stack developer · Web & mobile")}</p>
         <div className="footer-links">
           <a href="https://github.com/dawiditwork" target="_blank" rel="noreferrer">GitHub <span>↗</span></a>
           <a href="https://www.linkedin.com/in/dawid-f-978307425/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
-          <a href="#home">Back to top <span>↑</span></a>
+          <a href="#home">{t("Back to top")} <span>↑</span></a>
         </div>
       </footer>
     </>
