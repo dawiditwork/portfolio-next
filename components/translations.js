@@ -96,5 +96,19 @@ export const german = {
   "The message could not be sent.": "Die Nachricht konnte nicht gesendet werden.",
   "Thank you — your message has been sent.": "Vielen Dank – deine Nachricht wurde gesendet.",
   "The message could not be sent. Please try again later.": "Die Nachricht konnte nicht gesendet werden. Bitte versuche es später erneut.",
-  "Something went wrong. Please try again later.": "Etwas ist schiefgelaufen. Bitte versuche es später erneut."
+  "Something went wrong. Please try again later.": "Etwas ist schiefgelaufen. Bitte versuche es später erneut.",
+  "Full-stack hiking platform with JWT authentication, MongoDB, multi-image uploads, geocoding and interactive maps. Includes automated backend and API tests for authentication, authorization, password reset, validation and security.":
+  "Full-Stack-Wanderplattform mit JWT-Authentifizierung, MongoDB, dem Upload mehrerer Bilder, Geocoding und interaktiven Karten. Enthält automatisierte Backend- und API-Tests für Authentifizierung, Autorisierung, Passwort-Reset, Validierung und Sicherheit.",
+
+"24 automated tests":
+  "24 automatisierte Tests",
+
+"Coverage reporting":
+  "Coverage-Berichte",
+
+"GitHub Actions CI":
+  "GitHub Actions CI",
+
+"Ownership authorization":
+  "Berechtigungsprüfung",
 };
