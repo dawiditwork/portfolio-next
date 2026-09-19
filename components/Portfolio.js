@@ -32,6 +32,9 @@ const skills = [
   "CSS3",
   "Git",
   "Docker",
+  "Supertest",
+  "GitHub Actions",
+  "API Testing",
 ];
 
 const projects = [
@@ -54,8 +57,14 @@ const projects = [
   {
     number: "03",
     title: "MyHikes",
-    description: "A dedicated web experience for hiking and outdoor exploration.",
-    stack: "Hiking · Outdoor · Web application",
+    description:  "Full-stack hiking platform with JWT authentication, MongoDB, multi-image uploads, geocoding and interactive maps. Includes automated backend and API tests for authentication, authorization, password reset, validation and security.",
+    stack: "React · Node.js · Express · MongoDB · JWT · Supertest · GitHub Actions · CI",
+    highlights: [
+    "24 automated tests",
+    "Coverage reporting",
+    "GitHub Actions CI",
+    "Ownership authorization",
+    ],
     href: "https://myhikes.dawidfrankowicz.com/",
     image: "/images/project-myhikes.png",
   },
@@ -449,7 +458,16 @@ export default function Portfolio() {
                 <div className="project-copy">
                   <h3>{t(project.title)}</h3>
                   <p>{t(project.description)}</p>
+
                   <span className="project-stack">{t(project.stack)}</span>
+                  
+                  {project.highlights && (
+                  <div className="project-highlights">
+                    {project.highlights.map((highlight) => (
+                      <span key={highlight}>{t(highlight)}</span>
+                    ))}
+                  </div>
+                  )}
                 </div>
                 <Image
                   className="project-shot"

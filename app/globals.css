@@ -155,6 +155,27 @@ h1 em { color: var(--orange); font-style: italic; font-weight: 400; }
 .project p { max-width: 640px; margin: 0; color: var(--muted); font-size: .8rem; }
 .project-copy { min-width: 0; }
 .project-stack { display: block; margin-top: 16px; }
+.project-highlights {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.project-highlights span {
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--ink);
+  font-size: .62rem;
+  line-height: 1.2;
+  letter-spacing: .03em;
+  white-space: nowrap;
+}
+
+.project:hover .project-highlights span {
+  border-color: rgba(237, 90, 45, .35);
+}
 .project-shot { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; object-position: top; border: 1px solid var(--line); box-shadow: 0 12px 32px rgba(21, 23, 17, .1); }
 .project-arrow { font-size: 1.45rem; }
 
