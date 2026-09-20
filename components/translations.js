@@ -111,4 +111,15 @@ export const german = {
 
 "Ownership authorization":
   "Berechtigungsprüfung",
+
+
+"2026 — PRESENT": "2026 — HEUTE",
+
+"Freelance Developer": "Freelance-Entwickler",
+
+"Independent · Remote": "Selbstständig · Remote",
+
+"Building and delivering modern web applications with React, Next.js, TypeScript and Node.js — from frontend and APIs to authentication, databases, testing and deployment.":
+"Entwicklung und Umsetzung moderner Webanwendungen mit React, Next.js, TypeScript und Node.js – vom Frontend und APIs über Authentifizierung und Datenbanken bis hin zu Tests und Deployment.",
+
 };

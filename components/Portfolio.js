@@ -366,6 +366,19 @@ export default function Portfolio() {
               >
                 <div className="resume-document-section" aria-hidden={resumeTab !== "experience"}>
                   <article className="timeline-entry">
+  <div className="timeline-date">{t("2026 — PRESENT")}</div>
+  <div>
+    <h3>{t("Freelance Developer")}</h3>
+    <p className="company">{t("Independent · Remote")}</p>
+    <p>
+      {t(
+        "Building and delivering modern web applications with React, Next.js, TypeScript and Node.js — from frontend and APIs to authentication, databases, testing and deployment."
+      )}
+    </p>
+  </div>
+</article>
+                  <article className="timeline-entry">
+                    
                     <div className="timeline-date">{t("03.2025 — PRESENT")}</div>
                     <div>
                       <h3>{t("Professional Driver")}</h3>
