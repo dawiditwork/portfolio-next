@@ -1,146 +1,21 @@
-# Portfolio Next
+# Portfolio refactor — structure only
 
-A modern personal portfolio built with Next.js. It presents selected projects, professional experience, education, technical skills, a downloadable CV, and a working contact form.
+This refactor splits the original large `Portfolio.js` and `globals.css` without intentionally changing the UI or content.
 
-## Features
+## Drop-in structure
 
-- Responsive single-page portfolio
-- Selected project showcase
-- Professional experience and education
-- Technical skills overview
-- Downloadable CV
-- Contact form powered by Resend
-- Optimized images and local fonts
-- Production-ready Next.js build
+- `Portfolio.jsx` — state, effects and orchestration only
+- `data/portfolioData.js` — translations, projects and tech list
+- `components/` — reusable interactive pieces
+- `sections/` — page sections
+- `globals.css` — only imports section styles
+- `styles/` — CSS split by feature / section
 
-## Tech Stack
+## Integration
 
-- [Next.js](https://nextjs.org/)
-- [React](https://react.dev/)
-- [Nodemailer](https://nodemailer.com/)
-- [Resend](https://resend.com/)
-- CSS
+1. Put the `portfolio-refactor` folder where your current portfolio component lives, or move its contents into your preferred `components/portfolio` folder.
+2. Replace the old large Portfolio component import with `Portfolio.jsx`.
+3. Replace the old global stylesheet content with the provided `globals.css`, and keep the `styles/` folder next to it. If your real `app/globals.css` must stay in `app/`, adjust the import paths accordingly.
+4. Keep the same public assets and API route paths — this refactor does not rename them.
 
-## Getting Started
-
-### Requirements
-
-- Node.js 20 or newer
-- npm
-- A Resend account and API key
-
-### Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/dawiditwork/portfolio-next.git
-cd portfolio-next
-```
-
-Install the dependencies:
-
-```bash
-npm install
-```
-
-Create a local environment file:
-
-```bash
-copy .env.example .env
-```
-
-On macOS or Linux:
-
-```bash
-cp .env.example .env
-```
-
-Configure the required environment variables:
-
-```env
-SMTP_HOST=smtp.resend.com
-SMTP_PORT=465
-SMTP_USER=resend
-SMTP_PASS=your-resend-api-key
-SMTP_FROM=Portfolio <contact@your-verified-domain.com>
-CONTACT_TO=your-email@example.com
-```
-
-Never commit your `.env` file or Resend API key.
-
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Available Scripts
-
-```bash
-npm run dev
-npm run lint
-npm run build
-npm run start
-```
-
-- `npm run dev` starts the development server.
-- `npm run lint` checks the project with ESLint.
-- `npm run build` creates an optimized production build.
-- `npm run start` runs the production build.
-
-## Contact Form
-
-The contact form sends a `POST` request to:
-
-```text
-/api/contact
-```
-
-The Next.js API route validates the submitted data and sends the message through Resend SMTP. The visitor's email address is assigned to `replyTo`, allowing direct replies from the received email.
-
-For local environments that intercept TLS connections, the application supports:
-
-```env
-SMTP_ALLOW_SELF_SIGNED=true
-```
-
-Use this option only during local development. Never enable it in production.
-
-## Deployment
-
-The project can be deployed with [Vercel](https://vercel.com/):
-
-1. Import this GitHub repository into Vercel.
-2. Open **Project Settings → Environment Variables**.
-3. Add all required SMTP variables.
-4. Do not add `SMTP_ALLOW_SELF_SIGNED=true` in production.
-5. Deploy the project.
-
-## Project Structure
-
-```text
-app/
-  api/contact/route.js
-  globals.css
-  layout.js
-  page.js
-components/
-  Portfolio.js
-public/
-  fonts/
-  images/
-```
-
-## License
-
-This project is currently published without an open-source license. All rights are reserved unless stated otherwise.
-
-## Portfolio languages and CV files
-
-German is the default. The language buttons display British and German flags. The EN/DE switch translates the interface and remembers the selection in localStorage when available. Translations are in `components/translations.js`.
-
-- English CV (existing): `public/Dawid-Frankowicz-CV.pdf`
-- German CV: add your German PDF as **`public/Dawid-Frankowicz-CV-DE.pdf`**. The DE download button already points to this file; it will work once the file is added.
+No visual redesign is included here on purpose. The next step can be animation / UI polish after the codebase is easier to work with.

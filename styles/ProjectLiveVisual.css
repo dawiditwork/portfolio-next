@@ -1,0 +1,541 @@
+/* PROJECT SHOWCASE 2.0 — scoped overlay. Keep the original project screenshot visible. */
+.project-image-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.project-image-shell > img {
+  display: block;
+}
+
+.plv {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 11px;
+  letter-spacing: .075em;
+}
+
+.plv * {
+  box-sizing: border-box;
+}
+
+.plv-vignette {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,rgba(3,8,16,.24),transparent 36%,rgba(3,8,16,.10)),linear-gradient(0deg,rgba(3,8,16,.32),transparent 26%);
+}
+
+.plv-grid {
+  position: absolute;
+  inset: 0;
+  opacity: .13;
+  background-image: linear-gradient(rgba(125,190,255,.16) 1px, transparent 1px),linear-gradient(90deg,rgba(125,190,255,.16) 1px,transparent 1px);
+  background-size: 52px 52px;
+  mask-image: linear-gradient(to top,black,transparent 85%);
+}
+
+.plv-edge {
+  position: absolute;
+  width: 23px;
+  height: 23px;
+  border-style: solid;
+  opacity: .75;
+}
+
+.plv-edge--tl {
+  top: 12px;
+  left: 12px;
+  border-width: 1px 0 0 1px;
+}
+
+.plv-edge--br {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 1px 1px 0;
+}
+
+/* AI: thin floating tool chips + a compact pipeline widget */
+.plv--ai {
+  color: #b2e4ff;
+}
+
+.plv--ai .plv-edge {
+  border-color: #91ceff;
+}
+
+.plv-ai-status {
+  position: absolute;
+  top: 10%;
+  left: 3%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #dbefff;
+  font-size: 9px;
+  text-shadow: 0 1px 8px #051022;
+}
+
+.plv-ai-status i,.plv-hikes-caption i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #70f5c2;
+  box-shadow: 0 0 10px #70f5c2;
+}
+
+.plv-ai-tools {
+  position: absolute;
+  left: 3.5%;
+  bottom: 12%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: clamp(130px,24%,215px);
+}
+
+.plv-tool {
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid rgba(154,137,255,.45);
+  border-radius: 6px;
+  background: rgba(11,17,35,.88);
+  box-shadow: 0 10px 23px rgba(3,5,19,.3);
+  color: #e7eaff;
+  backdrop-filter: blur(8px);
+  font-size: clamp(8px,.82vw,11px);
+}
+
+.plv-tool-icon {
+  font-size: 16px;
+  color: #b5a3ff;
+}
+
+.plv-tool-label {
+  white-space: nowrap;
+}
+
+.plv-tool small {
+  margin-left: auto;
+  color: #8cf0c8;
+  font-size: 8px;
+}
+
+.plv-ai-process {
+  position: absolute;
+  right: 3%;
+  bottom: 9%;
+  width: min(32%,260px);
+  min-height: 102px;
+  padding: 13px;
+  border: 1px solid rgba(127,161,255,.55);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(9,13,34,.90);
+  box-shadow: 0 20px 40px rgba(0,0,0,.36),0 0 22px rgba(106,98,255,.10);
+  backdrop-filter: blur(8px);
+}
+
+.plv-process-top,.plv-process-bottom {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: clamp(7px,.72vw,10px);
+}
+
+.plv-process-top b {
+  font-size: inherit;
+  color: #a49bff;
+}
+
+.plv-process-track {
+  height: 4px;
+  margin: 16px 0 12px;
+  overflow: hidden;
+  background: rgba(150,154,220,.23);
+  border-radius: 100px;
+}
+
+.plv-process-track > span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg,#6acbff,#a78aff);
+  box-shadow: 0 0 12px #a78aff;
+  transform-origin: left;
+}
+
+.plv-process-bottom {
+  color: #b4bdd4;
+}
+
+.plv-process-bottom strong {
+  color: #b19aff;
+}
+
+.plv-process-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 23%;
+  background: linear-gradient(90deg,transparent,rgba(146,169,255,.13),transparent);
+  transform: skewX(-13deg);
+}
+
+/* HIKES: compact route visualization, not a giant title card */
+.plv--hikes {
+  color: #8ef0ce;
+}
+
+.plv--hikes .plv-edge {
+  border-color: #7cecc7;
+}
+
+.plv--hikes .plv-vignette {
+  background: linear-gradient(90deg,transparent 33%,rgba(0,18,24,.25)),linear-gradient(0deg,rgba(0,22,28,.32),transparent 32%);
+}
+
+.plv-hikes-caption {
+  position: absolute;
+  left: 5%;
+  bottom: 7%;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: #b7ffea;
+  font-size: 9px;
+}
+
+.plv-route-window {
+  position: absolute;
+  top: 20%;
+  right: 4%;
+  width: 46%;
+  height: 56%;
+  border: 1px solid rgba(100,244,195,.45);
+  border-radius: 9px;
+  background: rgba(2,28,34,.84);
+  box-shadow: 0 18px 36px rgba(0,0,0,.38);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+}
+
+.plv-route-window::before {
+  content:"";
+  position: absolute;
+  inset: 0;
+  opacity: .25;
+  background-image: linear-gradient(#4ce4ae22 1px,transparent 1px),linear-gradient(90deg,#4ce4ae22 1px,transparent 1px);
+  background-size: 22px 22px;
+}
+
+.plv-route-heading,.plv-route-footer {
+  position: absolute;
+  z-index: 1;
+  left: 10%;
+  right: 10%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  color: #caffea;
+  font-size: clamp(7px,.7vw,10px);
+}
+
+.plv-route-heading {
+  top: 9%;
+}
+
+.plv-route-heading span {
+  color: #76d6bb;
+}
+
+.plv-route {
+  position: absolute;
+  inset: 16% 5% 12%;
+  width: 90%;
+  height: 72%;
+  overflow: visible;
+  filter: drop-shadow(0 0 5px rgba(107,255,196,.4));
+}
+
+.plv-route-back {
+  fill: none;
+  stroke: rgba(116,231,195,.19);
+  stroke-width: 6;
+}
+
+.plv-route-line {
+  fill: none;
+  stroke: #89f9d0;
+  stroke-width: 2.7;
+  stroke-linecap: round;
+}
+
+.plv-route-footer {
+  bottom: 8%;
+  color: #7bd1b6;
+}
+
+.plv-live-dot {
+  color: #90ffbf;
+}
+
+.plv-hikes-tag {
+  position: absolute;
+  right: 7%;
+  bottom: 9%;
+  padding: 9px 12px;
+  border: 1px solid rgba(114,231,199,.3);
+  border-radius: 5px;
+  background: rgba(0,28,30,.87);
+  color: #b9ffe5;
+  font-size: 9px;
+}
+
+/* BLOG: compact content studio and micro-publishing card */
+.plv--blog {
+  color: #fff0e8;
+}
+
+.plv--blog .plv-edge {
+  border-color: #ff926a;
+}
+
+.plv--blog .plv-vignette {
+  background: linear-gradient(90deg,transparent 30%,rgba(7,7,16,.23)),linear-gradient(0deg,rgba(5,7,17,.30),transparent 34%);
+}
+
+.plv-blog-caption {
+  position: absolute;
+  top: 13%;
+  right: 5%;
+  display: flex;
+  gap: 14px;
+  color: #ffd3c3;
+  font-size: 9px;
+  text-shadow: 0 1px 9px #050710;
+}
+
+.plv-blog-caption span {
+  color: #80edb3;
+}
+
+.plv-editor {
+  position: absolute;
+  top: 32%;
+  right: 5%;
+  width: 45%;
+  height: 49%;
+  border: 1px solid rgba(255,111,74,.58);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(12,16,30,.94);
+  box-shadow: 0 22px 45px rgba(0,0,0,.5),0 0 20px rgba(255,94,53,.10);
+  backdrop-filter: blur(10px);
+}
+
+.plv-editor-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 13px;
+  border-bottom: 1px solid rgba(255,255,255,.09);
+}
+
+.plv-editor-head > span {
+  display: flex;
+  gap: 4px;
+}
+
+.plv-editor-head i {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ff6a45;
+}
+
+.plv-editor-head i:nth-child(2) {
+  background: #ffce68;
+}
+
+.plv-editor-head i:nth-child(3) {
+  background: #6fe1ad;
+}
+
+.plv-editor-head small {
+  color: #b8a9aa;
+  font-size: 8px;
+}
+
+.plv-editor-body {
+  padding: 9% 8% 0;
+}
+
+.plv-editor-overline {
+  color: #ff9c7a;
+  font-size: clamp(8px,.7vw,10px);
+}
+
+.plv-editor-body strong {
+  display: block;
+  margin: 10px 0 15px;
+  color: #fff5f2;
+  font-family: system-ui,sans-serif;
+  font-size: clamp(13px,1.7vw,25px);
+  line-height: 1.16;
+  letter-spacing: -.025em;
+}
+
+.plv-caret {
+  color: #ff946b;
+  animation: plv-blink 1s steps(1) infinite;
+}
+
+.plv-editor-rule {
+  display: block;
+  width: 78%;
+  height: 5px;
+  margin: 9px 0;
+  border-radius: 9px;
+  background: rgba(255,255,255,.16);
+}
+
+.plv-editor-rule--short {
+  width: 57%;
+}
+
+.plv-editor-foot {
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 9%;
+  display: flex;
+  justify-content: space-between;
+  color: #b4acba;
+  font-size: 8px;
+}
+
+.plv-editor-foot b {
+  color: #78f2b0;
+}
+
+.plv-publish {
+  position: absolute;
+  right: 37%;
+  bottom: 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 11px 13px;
+  border: 1px solid rgba(255,120,71,.5);
+  border-radius: 6px;
+  background: rgba(39,19,23,.96);
+  box-shadow: 0 12px 27px rgba(0,0,0,.38);
+}
+
+.plv-publish span {
+  color: #ffad8d;
+  font-size: 8px;
+}
+
+.plv-publish strong {
+  font-size: clamp(8px,.75vw,10px);
+  white-space: nowrap;
+}
+
+@keyframes plv-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media(max-width:760px) {
+  .plv {
+    font-size: 9px;
+  }
+  .plv-ai-status,.plv-blog-caption {
+    font-size: 7px;
+  }
+  .plv-ai-tools {
+    left: 2%;
+    bottom: 8%;
+    width: 32%;
+    gap: 5px;
+  }
+  .plv-tool {
+    padding: 5px 7px;
+    min-height: 25px;
+    gap: 4px;
+  }
+  .plv-tool small {
+    display: none;
+  }
+  .plv-tool-icon {
+    font-size: 12px;
+  }
+  .plv-ai-process {
+    right: 2%;
+    bottom: 8%;
+    width: 38%;
+    min-height: 75px;
+    padding: 8px;
+  }
+  .plv-process-track {
+    margin: 12px 0 8px;
+  }
+  .plv-route-window {
+    top: 23%;
+    right: 3%;
+    width: 53%;
+    height: 50%;
+  }
+  .plv-route-heading span {
+    display: none;
+  }
+  .plv-hikes-caption {
+    bottom: 5%;
+    font-size: 7px;
+  }
+  .plv-hikes-tag {
+    bottom: 5%;
+    font-size: 7px;
+    padding: 6px;
+  }
+  .plv-blog-caption {
+    top: 10%;
+  }
+  .plv-editor {
+    width: 56%;
+    top: 32%;
+    right: 3%;
+    height: 51%;
+  }
+  .plv-editor-head {
+    padding: 7px 9px;
+  }
+  .plv-editor-body strong {
+    font-size: clamp(12px,2.8vw,18px);
+  }
+  .plv-publish {
+    right: 38%;
+    bottom: 7%;
+    padding: 7px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .plv-caret {
+    animation: none;
+  }
+}

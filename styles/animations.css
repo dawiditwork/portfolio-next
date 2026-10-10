@@ -1,0 +1,63 @@
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+@keyframes grid-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(64px, 64px, 0);
+  }
+}
+
+@keyframes status-pulse {
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+}
+
+@keyframes scroll-dash {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(290%);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes header-scan {
+  from {
+    width: 16%;
+  }
+
+  to {
+    width: 48%;
+  }
+}
+
+@keyframes orbit-float {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+
+  50% {
+    transform: translate(-20px, 24px) rotate(12deg);
+  }
+}

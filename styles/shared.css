@@ -1,0 +1,53 @@
+/* =========================================================
+   SHARED — SECTION LAYOUT
+   ========================================================= */
+
+.section-v3 {
+  position: relative;
+  padding: clamp(90px, 10vw, 160px) 0;
+}
+
+.section-shell {
+  width: min(100% - 48px, 1380px);
+  margin: 0 auto;
+}
+
+/* =========================================================
+   SECTION KICKER
+   ========================================================= */
+
+.section-kicker-v3 {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(17, 20, 21, 0.15);
+}
+
+.section-kicker-v3 span {
+  color: var(--orange);
+  font-family: "Courier New", monospace;
+  font-size: 0.62rem;
+}
+
+.section-kicker-v3 p {
+  margin: 0;
+
+  color: rgba(17, 20, 21, 0.52);
+  font-size: 0.61rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   LIGHT VARIANT
+   ========================================================= */
+
+.section-kicker-v3.light {
+  border-color: var(--line);
+}
+
+.section-kicker-v3.light p {
+  color: var(--muted);
+}

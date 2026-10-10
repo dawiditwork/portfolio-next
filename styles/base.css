@@ -1,0 +1,93 @@
+/* =========================================================
+   ROOT — DESIGN TOKENS
+   ========================================================= */
+
+:root {
+  --bg: #080a0b;
+  --bg-soft: #0d1012;
+
+  --panel: #111518;
+  --panel-2: #151a1e;
+
+  --text: #f5f3ed;
+  --muted: #8f989f;
+  --faint: #545d63;
+
+  --line: rgba(255, 255, 255, 0.11);
+  --line-strong: rgba(255, 255, 255, 0.19);
+
+  --orange: #ff5f32;
+  --cyan: #76d4ff;
+  --green: #77e4a3;
+
+  --paper: #e9e6dd;
+  --ink: #111415;
+}
+
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+  scroll-padding-top: 82px;
+  background: var(--bg);
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+
+  color: var(--text);
+  background: var(--bg);
+
+  font-family: var(--font-poppins), sans-serif;
+  line-height: 1.6;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+/* =========================================================
+   SELECTION
+   ========================================================= */
+
+::selection {
+  color: #090b0c;
+  background: var(--cyan);
+}
+
+/* =========================================================
+   LINKS & FORM ELEMENTS
+   ========================================================= */
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  color: inherit;
+}
+
+/* =========================================================
+   IMAGES
+   ========================================================= */
+
+img {
+  user-select: none;
+}

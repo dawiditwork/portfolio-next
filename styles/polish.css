@@ -1,0 +1,207 @@
+/* =========================================================
+   V3.1 POLISH PACK
+   ========================================================= */
+
+/* CUSTOM CURSOR */
+@media (hover: hover) and (pointer: fine) {
+  body,
+  a,
+  button,
+  input,
+  textarea,
+  .project-media,
+  .engineering-cards article {
+    cursor: none;
+  }
+}
+
+.cursor-v3 {
+  position: fixed;
+  z-index: 9999;
+  left: -18px;
+  top: -18px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  border: 1px solid rgba(118, 212, 255, 0.58);
+  border-radius: 50%;
+  background: rgba(118, 212, 255, 0.035);
+  box-shadow:
+    0 0 24px rgba(118, 212, 255, 0.12),
+    inset 0 0 14px rgba(118, 212, 255, 0.04);
+  backdrop-filter: blur(2px);
+  will-change: transform, opacity;
+}
+
+.cursor-v3::before {
+  content: "";
+  position: absolute;
+  inset: -9px;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.cursor-v3 span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 13px rgba(255, 95, 50, 0.9);
+}
+
+.cursor-v3.active {
+  border-color: rgba(255, 95, 50, 0.78);
+  background: rgba(255, 95, 50, 0.055);
+  box-shadow:
+    0 0 34px rgba(255, 95, 50, 0.17),
+    inset 0 0 18px rgba(255, 95, 50, 0.05);
+}
+
+.cursor-v3.active::before {
+  border-color: rgba(118, 212, 255, 0.22);
+  transform: scale(1.15);
+}
+
+/* ACTIVE NAVIGATION */
+.nav-v3 a.active {
+  color: var(--text);
+}
+
+.nav-v3 a.active::after {
+  right: 0;
+  background: linear-gradient(90deg, var(--orange), var(--cyan));
+  box-shadow: 0 0 12px rgba(118, 212, 255, 0.24);
+}
+
+/* ANIMATED HERO COUNTERS */
+.hero-stats-v3 strong {
+  min-width: 2.3ch;
+  display: inline-block;
+}
+
+/* PARALLAX WORDS */
+.giant-words {
+  width: max-content;
+  min-width: 108%;
+  will-change: transform;
+}
+
+/* PROJECT NUMBERS */
+.project-sticky {
+  isolation: isolate;
+}
+
+.project-ghost-number {
+  position: absolute;
+  z-index: -1;
+  right: -0.03em;
+  top: 47%;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.045);
+  font-family: Poppins, Arial, sans-serif;
+  font-size: clamp(17rem, 37vw, 42rem);
+  font-weight: 600;
+  line-height: 0.65;
+  letter-spacing: -0.12em;
+  transform: translateY(-50%);
+  user-select: none;
+  pointer-events: none;
+}
+
+/* PROJECT MEDIA — 3D TILT */
+.project-media-wrap {
+  perspective: 1300px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.project-media {
+  transform-style: preserve-3d;
+  box-shadow:
+    0 55px 130px rgba(0, 0, 0, 0.52),
+    0 0 0 1px rgba(255, 255, 255, 0.018),
+    0 0 70px rgba(118, 212, 255, 0.035);
+}
+
+/* The corner ::before belongs to projects.css.
+   Put the subtle glow on the existing grid overlay instead. */
+.project-media .project-screen-grid {
+  background-image:
+    radial-gradient(
+      circle at 68% 34%,
+      rgba(118, 212, 255, 0.18),
+      transparent 34%
+    ),
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+.project-media:hover {
+  border-color: rgba(118, 212, 255, 0.58);
+  box-shadow:
+    0 65px 150px rgba(0, 0, 0, 0.58),
+    0 0 0 1px rgba(118, 212, 255, 0.08),
+    0 0 90px rgba(118, 212, 255, 0.08);
+}
+
+.project-media:hover .project-browser-bar {
+  border-bottom-color: rgba(118, 212, 255, 0.25);
+}
+
+.project-media:hover img {
+  transform: scale(1.035);
+}
+
+/* PROJECT DETAILS */
+.project-details h3 {
+  text-wrap: balance;
+}
+
+.project-details h3::after {
+  content: "";
+  width: 42px;
+  height: 2px;
+  margin: 18px 0 0;
+  display: block;
+  background: linear-gradient(90deg, var(--orange), var(--cyan));
+  transform: scaleX(0.45);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-scene:hover .project-details h3::after {
+  transform: scaleX(1);
+}
+
+/* ENGINEERING CARDS — LIGHT EFFECT */
+.engineering-cards article {
+  position: relative;
+  overflow: hidden;
+}
+
+.engineering-cards article::after {
+  content: "";
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  right: -70px;
+  top: -70px;
+  border-radius: 50%;
+  opacity: 0;
+  background: radial-gradient(
+    circle,
+    rgba(118, 212, 255, 0.22),
+    transparent 70%
+  );
+  transition:
+    opacity 0.35s ease,
+    transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.engineering-cards article:hover::after {
+  opacity: 1;
+  transform: translate(-30px, 30px) scale(1.3);
+}

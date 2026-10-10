@@ -1,0 +1,278 @@
+
+/* EXPERIENCE MOBILE 3.0 */
+
+.cv-mobile {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .cvbook-stage {
+    display: none !important;
+  }
+
+  .cv-mobile {
+    display: block;
+    width: 100%;
+    color: #201811;
+  }
+
+  .cv-mobile__paper {
+    padding: 22px 20px 18px;
+    border: 1px solid rgba(92, 63, 35, 0.27);
+    border-radius: 5px;
+    background:
+      radial-gradient(
+        ellipse at 85% 10%,
+        rgba(255, 255, 255, 0.55),
+        transparent 48%
+      ),
+      linear-gradient(135deg, #f2e6d0, #ebdcc0);
+    box-shadow: 0 18px 45px rgba(58, 37, 18, 0.1);
+  }
+
+  .cv-mobile__topline,
+  .cv-mobile__bottomline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    color: rgba(48, 35, 24, 0.52);
+    font-family: "Courier New", monospace;
+    font-size: 0.54rem;
+    font-weight: 700;
+    letter-spacing: 0.09em;
+  }
+
+  .cv-mobile__topline {
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(80, 57, 34, 0.18);
+  }
+
+  .cv-mobile__heading {
+    padding: 26px 0 22px;
+  }
+
+  .cv-mobile__eyebrow,
+  .cv-mobile__date {
+    display: block;
+    color: #a34d2c;
+    font-family: "Courier New", monospace;
+    font-size: 0.59rem;
+    font-weight: 700;
+    letter-spacing: 0.055em;
+  }
+
+  .cv-mobile__heading h3 {
+    margin: 12px 0 0;
+    font-size: clamp(1.9rem, 8vw, 2.9rem);
+    line-height: 0.96;
+    letter-spacing: -0.065em;
+  }
+
+  .cv-mobile__heading h3 span {
+    color: rgba(43, 34, 26, 0.43);
+  }
+
+  .cv-mobile__list {
+    border-top: 1px solid rgba(80, 57, 34, 0.19);
+  }
+
+  .cv-mobile__entry {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    gap: 12px;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(80, 57, 34, 0.17);
+  }
+
+  .cv-mobile__icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    color: #a84c29;
+    border: 1px solid rgba(160, 77, 43, 0.28);
+    border-radius: 50%;
+  }
+
+  .cv-mobile__entry-content {
+    min-width: 0;
+  }
+
+  .cv-mobile__entry h4,
+  .cv-mobile__extra-job h4 {
+    margin: 8px 0 4px;
+    color: #201811;
+    font-size: 1.08rem;
+    line-height: 1.2;
+  }
+
+  .cv-mobile__entry strong,
+  .cv-mobile__extra-job strong {
+    display: block;
+    color: rgba(39, 30, 22, 0.7);
+    font-size: 0.73rem;
+  }
+
+  .cv-mobile__entry p,
+  .cv-mobile__extra-job p {
+    margin: 7px 0 0;
+    color: rgba(39, 30, 22, 0.66);
+    font-size: 0.76rem;
+    line-height: 1.55;
+  }
+
+  .cv-mobile__education {
+    margin-top: 22px;
+    padding: 20px 18px;
+    border: 1px solid rgba(136, 89, 47, 0.28);
+    background: rgba(255, 251, 240, 0.35);
+  }
+
+  .cv-mobile__education-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    color: #a34d2c;
+    font-family: "Courier New", monospace;
+    font-size: 0.55rem;
+    font-weight: 700;
+  }
+
+  .cv-mobile__education h3 {
+    margin: 9px 0 7px;
+    color: #211910;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: clamp(2.3rem, 10vw, 3.5rem);
+    line-height: 0.99;
+    overflow-wrap: anywhere;
+  }
+
+  .cv-mobile__education > strong {
+    display: block;
+    color: #3e2e1f;
+    font-size: 0.83rem;
+  }
+
+  .cv-mobile__education > p {
+    margin: 7px 0 0;
+    color: rgba(45, 33, 22, 0.67);
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  .cv-mobile__degree-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 18px;
+    color: #357449;
+    font-family: "Courier New", monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+  }
+
+  .cv-mobile__status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #3b925a;
+  }
+
+  .cv-mobile__diploma {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    min-height: 44px;
+    margin-top: 20px;
+    padding: 11px 14px;
+    border: 1px solid rgba(92, 62, 33, 0.31);
+    color: #261b11;
+    background: rgba(255, 255, 255, 0.25);
+    font-family: "Courier New", monospace;
+    font-size: 0.57rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .cv-mobile__more {
+    margin-top: 24px;
+    border-top: 1px solid rgba(80, 57, 34, 0.18);
+  }
+
+  .cv-mobile__more-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 64px;
+    padding: 15px 0;
+    border: 0;
+    color: #261c13;
+    background: transparent;
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 650;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .cv-mobile__more-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .cv-mobile__chevron {
+    flex-shrink: 0;
+    transition: transform 0.35s ease;
+  }
+
+  .cv-mobile__chevron.is-open {
+    transform: rotate(180deg);
+  }
+
+  .cv-mobile__extra[hidden] {
+    display: none;
+  }
+
+  .cv-mobile__extra-job,
+  .cv-mobile__school {
+    padding: 18px 0;
+    border-top: 1px solid rgba(80, 57, 34, 0.15);
+  }
+
+  .cv-mobile__school-label {
+    display: block;
+    margin-top: 8px;
+    color: #a34d2c;
+    font-size: 0.6rem;
+    font-weight: 700;
+  }
+
+  .cv-mobile__school h4 {
+    margin: 9px 0 5px;
+    font-size: 1.05rem;
+  }
+
+  .cv-mobile__school p {
+    margin: 0;
+    color: rgba(39, 30, 22, 0.65);
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .cv-mobile__bottomline {
+    padding-top: 15px;
+    border-top: 1px solid rgba(80, 57, 34, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cv-mobile__chevron {
+    transition: none;
+  }
+}

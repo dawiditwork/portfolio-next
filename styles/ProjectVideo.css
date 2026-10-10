@@ -1,0 +1,53 @@
+/* =========================================================
+   PROJECT VIDEO — CINEMATIC DEMOS
+   ========================================================= */
+
+/* Cinematic videos inside existing CASE browser frames */
+
+.project-image-shell:has(.project-cinematic-video) {
+  position: relative;
+  aspect-ratio: 960 / 520;
+  overflow: hidden;
+  background: #071017;
+}
+
+/* Video */
+
+.project-cinematic-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Subtle hover zoom */
+
+.project-media:hover .project-cinematic-video {
+  transform: scale(1.018);
+}
+
+/* Keep moving demo footage visible */
+
+.project-image-shell:has(.project-cinematic-video) .project-screen-grid,
+.project-image-shell:has(.project-cinematic-video) .project-media-shine {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .project-cinematic-video {
+    transition: none;
+  }
+
+  .project-media:hover .project-cinematic-video {
+    transform: none;
+  }
+}

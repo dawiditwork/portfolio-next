@@ -1,0 +1,848 @@
+/* =========================================================
+   INFINITE 3D STACK LOOP
+   ========================================================= */
+
+.tech-marquee {
+  position: relative;
+  z-index: 5;
+  min-height: 192px;
+
+  display: grid;
+  grid-template-columns: 168px minmax(0, 1fr);
+  overflow: hidden;
+
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+
+  background:
+    radial-gradient(
+      circle at 76% 50%,
+      rgba(118, 212, 255, 0.065),
+      transparent 31%
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 95, 50, 0.018),
+      transparent 30%
+    ),
+    #090c0d;
+}
+
+/* =========================================================
+   LEFT LABEL
+   ========================================================= */
+
+.stack-label {
+  position: relative;
+  z-index: 10;
+  min-width: 0;
+  padding: 23px 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 7px;
+  overflow: hidden;
+
+  color: #090c0d;
+
+  background: linear-gradient(
+    145deg,
+    #ff8058 0%,
+    #ff5f32 56%,
+    #ed4d26 100%
+  );
+
+  box-shadow: 22px 0 45px rgba(0, 0, 0, 0.22);
+}
+
+.stack-label::before {
+  content: "";
+  position: absolute;
+  left: -55px;
+  bottom: -65px;
+  width: 145px;
+  height: 145px;
+
+  border: 1px solid rgba(8, 10, 11, 0.21);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 22px rgba(8, 10, 11, 0.045),
+    0 0 0 46px rgba(8, 10, 11, 0.025);
+
+  pointer-events: none;
+}
+
+.stack-label::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 2px;
+  height: 100%;
+
+  background: linear-gradient(
+    transparent,
+    rgba(8, 10, 11, 0.45),
+    transparent
+  );
+}
+
+.stack-label-index {
+  position: absolute;
+  left: 17px;
+  top: 14px;
+
+  color: rgba(8, 10, 11, 0.57);
+  font-family: "Courier New", monospace;
+  font-size: 0.47rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.stack-label-overline {
+  position: relative;
+  z-index: 2;
+
+  color: rgba(8, 10, 11, 0.57);
+  font-family: "Courier New", monospace;
+  font-size: 0.47rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.stack-label strong {
+  position: relative;
+  z-index: 2;
+  max-width: 125px;
+
+  color: #090c0d;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1.35;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.stack-label-meta {
+  position: relative;
+  z-index: 2;
+  margin-top: 2px;
+
+  color: rgba(8, 10, 11, 0.64);
+  font-family: "Courier New", monospace;
+  font-size: 0.46rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.stack-label-status {
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: rgba(8, 10, 11, 0.66);
+  font-family: "Courier New", monospace;
+  font-size: 0.4rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+}
+
+.stack-label-status i {
+  width: 5px;
+  height: 5px;
+
+  border-radius: 50%;
+  background: #095524;
+  box-shadow: 0 0 0 4px rgba(9, 85, 36, 0.1);
+}
+
+/* =========================================================
+   STAGE
+   ========================================================= */
+
+.stack-stage {
+  position: relative;
+  min-width: 0;
+
+  display: grid;
+  align-items: center;
+  overflow: hidden;
+
+  perspective: 1300px;
+}
+
+.stack-stage-glow {
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  width: 50%;
+  aspect-ratio: 1;
+
+  pointer-events: none;
+  border-radius: 50%;
+
+  background: radial-gradient(
+    circle,
+    rgba(118, 212, 255, 0.08),
+    transparent 67%
+  );
+
+  filter: blur(35px);
+  transform: translate(-50%, -50%);
+}
+
+.stack-perspective-grid {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+
+  pointer-events: none;
+  opacity: 0.2;
+
+  background-image:
+    linear-gradient(
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 1px,
+      transparent 1px
+    );
+
+  background-size: 48px 48px;
+
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 13%,
+    #000 86%,
+    transparent
+  );
+
+  transform:
+    perspective(600px)
+    rotateX(67deg)
+    translateY(54%);
+
+  transform-origin: bottom;
+}
+
+/* =========================================================
+   INFINITE WINDOW / TRACK
+   ========================================================= */
+
+.stack-loop-window {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  overflow: hidden;
+  padding: 24px 0;
+}
+
+.stack-loop-track {
+  width: max-content;
+
+  display: flex;
+  align-items: center;
+
+  transform-style: preserve-3d;
+  will-change: transform;
+
+  animation: stack-infinite-loop 34s linear infinite;
+}
+
+/* Pause scrolling on hover */
+
+.stack-stage:hover .stack-loop-track {
+  animation-play-state: paused;
+}
+
+.stack-loop-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding-right: 10px;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   STACK CARDS
+   ========================================================= */
+
+.stack-card {
+  position: relative;
+  flex: 0 0 118px;
+  width: 118px;
+  height: 143px;
+  padding: 11px 9px 10px;
+
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  overflow: hidden;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: var(--text);
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.047),
+    rgba(255, 255, 255, 0.008)
+  );
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.01);
+
+  transform-style: preserve-3d;
+
+  transition:
+    transform 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+
+  animation: stack-card-float 5s ease-in-out infinite;
+  animation-delay: calc(var(--stack-index) * -0.31s);
+}
+
+.stack-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+  opacity: 0;
+
+  background: radial-gradient(
+    circle at 50% 42%,
+    rgba(118, 212, 255, 0.15),
+    transparent 60%
+  );
+
+  transition: opacity 0.35s ease;
+}
+
+.stack-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(118, 212, 255, 0.65),
+    transparent
+  );
+
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+/* 3D hover effect */
+
+.stack-card:hover {
+  z-index: 50;
+  border-color: rgba(118, 212, 255, 0.58);
+
+  background: linear-gradient(
+    145deg,
+    rgba(118, 212, 255, 0.095),
+    rgba(255, 255, 255, 0.02)
+  );
+
+  box-shadow:
+    0 25px 55px rgba(0, 0, 0, 0.4),
+    0 0 38px rgba(118, 212, 255, 0.11),
+    0 0 18px rgba(255, 95, 50, 0.055);
+
+  transform:
+    translateY(-11px)
+    translateZ(55px)
+    rotateX(-7deg)
+    rotateY(7deg)
+    scale(1.07);
+}
+
+.stack-card:hover::before,
+.stack-card:hover::after {
+  opacity: 1;
+}
+
+/* =========================================================
+   CARD NUMBER
+   ========================================================= */
+
+.stack-card-index {
+  position: relative;
+  z-index: 3;
+
+  color: rgba(245, 243, 237, 0.24);
+  font-family: "Courier New", monospace;
+  font-size: 0.42rem;
+  letter-spacing: 0.07em;
+}
+
+/* =========================================================
+   ICON 3D SCENE
+   ========================================================= */
+
+.stack-icon-scene {
+  position: relative;
+  width: 58px;
+  height: 58px;
+
+  place-self: center;
+  display: grid;
+  place-items: center;
+
+  perspective: 500px;
+  transform-style: preserve-3d;
+}
+
+.stack-icon-scene::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 4px;
+  width: 33px;
+  height: 7px;
+
+  border-radius: 50%;
+  background: rgba(118, 212, 255, 0.13);
+
+  filter: blur(6px);
+  transform: translateX(-50%) rotateX(70deg);
+}
+
+.stack-icon-orbit {
+  position: absolute;
+  inset: -8px;
+
+  border: 1px solid rgba(118, 212, 255, 0.13);
+  border-radius: 50%;
+  transform-style: preserve-3d;
+
+  animation: stack-orbit 7.5s linear infinite;
+  animation-delay: calc(var(--stack-index) * -0.45s);
+}
+
+.stack-icon-orbit::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -2px;
+  width: 4px;
+  height: 4px;
+
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px var(--cyan);
+}
+
+.stack-icon-orbit::after {
+  content: "";
+  position: absolute;
+  right: 1px;
+  bottom: 10px;
+  width: 3px;
+  height: 3px;
+
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 8px var(--orange);
+}
+
+.stack-icon-3d {
+  position: relative;
+  z-index: 3;
+  width: 39px;
+  height: 39px;
+
+  transform-style: preserve-3d;
+
+  animation: stack-icon-spin 11s linear infinite;
+  animation-delay: calc(var(--stack-index) * -0.71s);
+}
+
+.stack-card:hover .stack-icon-3d {
+  animation-duration: 2.9s;
+}
+
+.stack-card:hover .stack-icon-orbit {
+  animation-duration: 3s;
+}
+
+.stack-icon-face {
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  backface-visibility: hidden;
+}
+
+.stack-icon-front {
+  transform: translateZ(3px);
+}
+
+.stack-icon-back {
+  transform: rotateY(180deg) translateZ(3px);
+}
+
+.stack-icon-face img {
+  width: 35px;
+  height: 35px;
+
+  display: block;
+  object-fit: contain;
+
+  filter: drop-shadow(
+    0 0 10px rgba(118, 212, 255, 0.17)
+  );
+
+  transition: filter 0.3s ease;
+}
+
+.stack-card:hover .stack-icon-face img {
+  filter: drop-shadow(
+    0 0 15px rgba(118, 212, 255, 0.37)
+  );
+}
+
+/* =========================================================
+   CARD TEXT
+   ========================================================= */
+
+.stack-card-copy {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+
+  display: grid;
+  gap: 3px;
+  text-align: center;
+}
+
+.stack-card-copy strong {
+  overflow: hidden;
+
+  color: rgba(245, 243, 237, 0.88);
+  font-size: 0.68rem;
+  font-weight: 600;
+  line-height: 1.25;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  transition: color 0.25s ease;
+}
+
+.stack-card-copy span {
+  color: rgba(245, 243, 237, 0.36);
+
+  font-family: "Courier New", monospace;
+  font-size: 0.4rem;
+  letter-spacing: 0.075em;
+  text-transform: uppercase;
+
+  transition: color 0.25s ease;
+}
+
+.stack-card:hover .stack-card-copy strong {
+  color: #fff;
+}
+
+.stack-card:hover .stack-card-copy span {
+  color: rgba(245, 243, 237, 0.62);
+}
+
+/* =========================================================
+   CARD CORNER
+   ========================================================= */
+
+.stack-card-corner {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  width: 15px;
+  height: 15px;
+
+  border-right: 1px solid var(--cyan);
+  border-bottom: 1px solid var(--cyan);
+
+  opacity: 0.28;
+
+  transition:
+    width 0.3s ease,
+    height 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.stack-card:hover .stack-card-corner {
+  width: 27px;
+  height: 27px;
+  opacity: 1;
+}
+
+/* =========================================================
+   EDGE FADES
+   ========================================================= */
+
+.stack-fade {
+  position: absolute;
+  z-index: 8;
+  top: 0;
+  width: 85px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.stack-fade-left {
+  left: 0;
+
+  background: linear-gradient(
+    90deg,
+    #090c0d,
+    transparent
+  );
+}
+
+.stack-fade-right {
+  right: 0;
+
+  background: linear-gradient(
+    -90deg,
+    #090c0d,
+    transparent
+  );
+}
+
+/* =========================================================
+   SIDE LABEL
+   ========================================================= */
+
+.stack-side-label {
+  position: absolute;
+  z-index: 12;
+  right: 11px;
+  top: 50%;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+
+  color: rgba(245, 243, 237, 0.2);
+  font-family: "Courier New", monospace;
+  font-size: 0.34rem;
+  letter-spacing: 0.11em;
+  writing-mode: vertical-rl;
+
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.stack-side-label i {
+  width: 1px;
+  height: 24px;
+  background: var(--orange);
+}
+
+/* =========================================================
+   ANIMATIONS
+   ========================================================= */
+
+/*
+   Two identical groups.
+   Moving exactly 50% creates a seamless loop.
+*/
+
+@keyframes stack-infinite-loop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes stack-card-float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+
+  50% {
+    translate: 0 -4px;
+  }
+}
+
+@keyframes stack-icon-spin {
+  from {
+    transform:
+      rotateX(9deg)
+      rotateY(0deg)
+      rotateZ(0deg);
+  }
+
+  to {
+    transform:
+      rotateX(9deg)
+      rotateY(360deg)
+      rotateZ(0deg);
+  }
+}
+
+@keyframes stack-orbit {
+  from {
+    transform:
+      rotateX(67deg)
+      rotateZ(0deg);
+  }
+
+  to {
+    transform:
+      rotateX(67deg)
+      rotateZ(360deg);
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .tech-marquee {
+    min-height: 190px;
+    grid-template-columns: 1fr;
+  }
+
+  .stack-label {
+    min-height: 61px;
+    padding: 0 20px;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-content: center;
+    gap: 3px 20px;
+  }
+
+  .stack-label-index,
+  .stack-label-overline {
+    display: none;
+  }
+
+  .stack-label strong {
+    max-width: none;
+    font-size: 0.72rem;
+  }
+
+  .stack-label-meta {
+    grid-column: 2;
+    grid-row: 1;
+    align-self: center;
+    font-size: 0.43rem;
+  }
+
+  .stack-label-status {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+
+  .stack-card {
+    flex-basis: 108px;
+    width: 108px;
+    height: 134px;
+  }
+
+  .stack-loop-track {
+    animation-duration: 30s;
+  }
+
+  .stack-fade {
+    width: 40px;
+  }
+
+  .stack-side-label {
+    display: none;
+  }
+}
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
+@media (max-width: 620px) {
+  .stack-label {
+    min-height: 57px;
+  }
+
+  .stack-label strong {
+    font-size: 0.66rem;
+  }
+
+  .stack-label-status {
+    display: none;
+  }
+
+  .stack-loop-window {
+    padding: 18px 0;
+  }
+
+  .stack-card {
+    flex-basis: 100px;
+    width: 100px;
+    height: 127px;
+  }
+
+  .stack-icon-scene {
+    width: 50px;
+    height: 50px;
+  }
+
+  .stack-icon-face img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .stack-card-copy strong {
+    font-size: 0.61rem;
+  }
+
+  .stack-loop-track {
+    animation-duration: 27s;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-loop-track,
+  .stack-card,
+  .stack-icon-3d,
+  .stack-icon-orbit {
+    animation: none !important;
+  }
+
+  .stack-loop-window {
+    overflow-x: auto;
+  }
+
+  .stack-loop-group:nth-child(2) {
+    display: none;
+  }
+}
